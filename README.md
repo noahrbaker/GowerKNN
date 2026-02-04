@@ -6,7 +6,10 @@
 
 GowerKNN is a specialized Python library designed for performing K-Nearest Neighbors (KNN) searches on mixed-type datasets containing both numerical and categorical variables. It implements the Gower Distance metric in a highly optimized, vectorized format suitable for large-scale clinical and epidemiological research.
 
-Standard Euclidean distance metrics fail when applied to nominal data, while standard One-Hot Encoding approaches can suffer from the curse of dimensionality. GowerKNN addresses this by computing similarity directly on mixed data types with support for missing values (NaNs), feature weighting, and massive dataset scaling.
+Standard Euclidean distance metrics fail when applied to nominal data, while standard One-Hot Encoding approaches can suffer from the curse of dimensionality and implicitly weigh the matches based on prevalence of categories. GowerKNN addresses this by computing similarity directly on mixed data types with support for missing values (NaNs), feature weighting, and massive dataset scaling.
+
+Gower distance is outlined in the original publication here:
+> Gower, J. C. (1971). A General Coefficient of Similarity and Some of Its Properties. Biometrics, 27(4), 857–871. https://doi.org/10.2307/2528823
 
 ### Key Features
 
@@ -20,11 +23,11 @@ Standard Euclidean distance metrics fail when applied to nominal data, while sta
 
 GowerKNN utilizes `flit` for packaging. You can install it directly from the source.
 
-"""bash
+```bash
 git clone https://github.com/noahrbaker/GowerKNN
 cd GowerKNN
 pip install .
-"""
+```
 
 ## Getting Started
 
@@ -104,17 +107,17 @@ Where:
 
 ## API Reference
 
-### `GowerKNN(weights=None, cat_features=None, logger=None)`
+`GowerKNN(weights=None, cat_features=None, logger=None)`
 
 * **weights**: *array-like, optional*. Relative importance of each feature.
 * **cat_features**: *list or mask, optional*. Explicitly define which columns are categorical. If None, types are inferred from the DataFrame.
 
-### `fit(X, y=None, seed=42)`
+`fit(X, y=None, seed=42)`
 
 Fits the estimator to the reference data `X`.
 * **seed**: *int*. Controls the random shuffle of data ingestion to ensuring reproducible tie-breaking.
 
-### `kneighbors(query, k=None, return_distance=True, fast_sort=True, batch_size=512)`
+`kneighbors(query, k=None, return_distance=True, fast_sort=True, batch_size=512)`
 
 Finds the K-nearest neighbors for the query set.
 * **query**: *DataFrame or array*. The subjects to find matches for.
